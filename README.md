@@ -2,7 +2,7 @@
 
 **Substack API** for Python scripts and a hosted **Substack MCP server** for Claude, ChatGPT, Cursor, Codex and n8n. Turn Markdown files into Substack drafts, schedule posts and Notes, export subscribers and posts, reply to comments you have not answered and pull subscriber, revenue and post stats from your own Substack publication.
 
-Substack has only a limited official API and no official MCP server. This repo gives you both, on top of the **hosted Substack API by [Cotlet](https://cotlet.dev/integrations/substack-api-mcp-server)**: you sign in to Substack once in your browser, Cotlet keeps the session working, and your AI agent (over MCP) or the Python scripts here (over the REST API) work in your account with one API key.
+Substack has only a limited official API and no official MCP server. This repo gives you both, on top of the **hosted Substack API by [Cotlet](https://cotlet.dev/integrations/substack-api-mcp-server)**: you sign in to Substack once in your own Cloud Browser (a Chrome Cotlet runs for you in the cloud), Cotlet keeps you signed in 24/7, and your AI agent (over MCP) or the Python scripts here (over the REST API) work in your account with one API key.
 
 - **Substack MCP server:** `https://cotlet.dev/mcp/v1`, 14 Substack tools for your AI agent. [Setup](#substack-mcp-server-for-claude-chatgpt-cursor-and-codex)
 - **Substack API:** `https://cotlet.dev/api/v1/substack/{endpoint}`, plus 15 ready Python scripts, one file per job, standard library only. [Scripts](#scripts)
@@ -39,11 +39,11 @@ python schedule_post.py --file essay.md --at 2026-10-14T08:00:00-04:00
 ## How it works
 
 ```text
-your script / AI agent ──HTTPS──▶ Cotlet Substack API ──your session──▶ substack.com (your publication)
+your script / AI agent ──HTTPS──▶ Cotlet Substack API ──your Cloud Browser's IP and cookies──▶ substack.com (your publication)
 ```
 
-1. **Get an API key.** [Request access at cotlet.dev](https://cotlet.dev/app/signup?app=substack) with Substack selected. Each request is reviewed and the key arrives by email. Every account starts with a free 7-day trial and 5,000 credits, no card needed.
-2. **Connect Substack once.** In the Cotlet console, open the Substack connect page and sign in to Substack the way you always do. Cotlet keeps the session, never your password.
+1. **Get an API key.** [Request access at cotlet.dev](https://cotlet.dev/app/signup?app=substack) with Substack selected. Each request is reviewed and the key arrives by email. Every account starts with a free 7-day trial and 2,000 credits, no card needed.
+2. **Sign in to Substack once.** In the Cotlet console, open your Cloud Browser, sign in to Substack there the way you always do, and press **Enable for agents** (read only or read and write). Password saving is off, so Cotlet never saves your password.
 3. **Run the scripts.** Each one is a plain `POST https://cotlet.dev/api/v1/substack/{endpoint}` with your key. When Substack changes its site, Cotlet fixes the integration; these scripts keep working unchanged.
 
 Without a key, or before your access is active, the API answers `403` with a link to request access.
@@ -53,7 +53,7 @@ Without a key, or before your access is active, the API answers `403` with a lin
 ### Requirements
 
 - Python 3.9 or newer. No `pip install`: the scripts use only the standard library.
-- A Cotlet API key with Substack connected.
+- A Cotlet API key, with Substack enabled for agents in your Cloud Browser.
 - A Substack account that can publish to the publication. The scripts can do what that account can do there.
 
 ### Setup
@@ -217,10 +217,10 @@ curl -X POST https://cotlet.dev/api/v1/substack/list_posts \
 | Status | Code | What to do |
 |---|---|---|
 | 403 | `api_key_required`, `access_not_granted` | Set `COTLET_API_KEY`, or [request access to Substack](https://cotlet.dev/app/signup?app=substack). |
-| 409 | `AUTH_REQUIRED`, `AUTH_EXPIRED` | Substack is not connected or the session expired. Open the link in the error and sign in again. |
-| 409 | `CAPTCHA_REQUIRED`, `MFA_REQUIRED` | Substack asked for a check only you can pass. Finish it on the connect page. |
-| 403 | `SCOPE_DENIED` | You connected Substack read-only. Allow write access in the dashboard. |
-| 402 | `insufficient_credits` | Credits ran out. Wait for next month's or move to a bigger size. |
+| 403 | `AUTH_REQUIRED`, `AUTH_EXPIRED` | Substack is not signed in or not enabled for agents, or it signed you out. Open the `browser_url` in the error, sign in to Substack in your Cloud Browser and enable it. |
+| 403 | `CAPTCHA_REQUIRED`, `MFA_REQUIRED` | Substack asked for a check only you can pass. Finish it in your Cloud Browser at the `browser_url`. |
+| 403 | `SCOPE_DENIED` | You enabled Substack read only. Switch it to read and write in your Cloud Browser. |
+| 402 | `INSUFFICIENT_CREDITS` | Credits ran out. Buy a credit pack in the dashboard. |
 | 429 | `rate_limited` | The client waits for `Retry-After` and retries by itself. |
 | 503 | `TARGET_BLOCKED` | Substack changed something; the endpoint is paused until it is fixed. Credits are refunded. |
 
@@ -242,13 +242,13 @@ Yes: `python export_subscribers.py --out subscribers.csv` gives the same CSV as 
 Yes: `python export_posts.py --dir posts` writes one `.md` file per post, including the paywalled part of your own posts. Drafts too, with `--status draft`.
 
 **Is this a Substack scraper?**
-It does what people usually want a scraper for (export posts, subscribers and stats) but works differently: the scripts call a hosted API that acts in your own Substack account with your own session. There is no headless browser on your machine, no `substack.sid` cookie to copy from DevTools and nothing to fix when Substack updates its site. It works on your own publication, not on other people's.
+It does what people usually want a scraper for (export posts, subscribers and stats) but works differently: the scripts call a hosted API that acts in your own Substack account, signed in inside your own Cloud Browser. There is no headless browser on your machine, no `substack.sid` cookie to copy from DevTools and nothing to fix when Substack updates its site. It works on your own publication, not on other people's.
 
 **Do I have to copy cookies or my Substack password into a config file?**
-No. You sign in to Substack once in your browser on the Cotlet connect page. Cotlet stores only the session, encrypted, and never your password. Your scripts only ever hold the Cotlet API key.
+No. You sign in to Substack once in your own Cotlet Cloud Browser, and enable it for agents. Password saving is off there, so Cotlet never saves your password. Your scripts only ever hold the Cotlet API key.
 
-**What happens when my Substack session expires?**
-The call returns `AUTH_EXPIRED` with a link. Open it, sign in to Substack again, and rerun the script.
+**What happens when Substack signs me out?**
+The call returns `AUTH_EXPIRED` with a link to your Cloud Browser, and you get an email. Sign in to Substack there again and rerun the script.
 
 **Does it need a paid Substack plan?**
 No. It acts as the Substack account you sign in with and can do what that account can do in the publication. Paid stats such as churn and revenue exist only for publications with paid subscriptions.
@@ -282,22 +282,17 @@ Email [contact@cotlet.dev](mailto:contact@cotlet.dev) with the `X-Request-Id` fr
 
 ## Pricing
 
-Free 7-day trial with 5,000 credits, no card needed. Then one plan for every app Cotlet supports, Substack included:
+Free 7-day trial with 2,000 credits, no card needed. Then pay as you go, no subscription: one-time credit packs from $29 for 5,000 credits, valid 12 months, for every app Cotlet supports, Substack included.
 
-| Size | Price | Credits / month |
-|---|---|---|
-| Solo | $29/mo | 3,000 |
-| Pro | $99/mo | 12,000 |
-| Agency | $299/mo | 40,000 |
-
-Each successful call uses credits for the work it takes; failed calls cost nothing. Each month's credits stay valid for 3 months. Nothing is charged until your access is active. [Full pricing](https://cotlet.dev/pricing).
+A successful call uses 20 to 30 credits (25 for most tools); failed calls cost nothing. Your Cloud Browser uses 50 credits a day while it has an app enabled for agents, however many apps that is. Nothing is charged without a purchase. [Full pricing](https://cotlet.dev/pricing).
 
 ## Security and your Substack account
 
-- **No password stored.** You sign in to Substack yourself; Cotlet keeps only the session, encrypted with AES-256 in an EU vault.
-- **Scoped access.** Connect Substack read-only, or read and write.
+- **No password saved.** You sign in to Substack yourself, in your own Cloud Browser in the EU, where password saving is off. Its profile is stored encrypted with AES-256-GCM.
+- **Every background request listed.** Cotlet sends the same requests your browser would, from its IP with its cookies, and lists each one in your Background activity.
+- **Scoped access.** Enable Substack for agents read only, or read and write.
 - **Your OK first.** Scheduled and published posts, Notes, replies and new subscribers wait for your confirmation unless you switch that off per tool.
-- **Revoke in one click.** Disconnect Substack in the dashboard and the session is deleted.
+- **Cut access in one click.** Disable Substack for agents, sign out of it in your Cloud Browser, or reset the browser.
 - **No data kept.** Results pass through to your script and are not stored.
 - **Never:** CAPTCHA solving, MFA bypass, spam.
 
