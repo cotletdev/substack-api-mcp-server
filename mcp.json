@@ -1,9 +1,8 @@
 {
   "mcpServers": {
-    "cotlet": {
-      "type": "http",
-      "url": "https://cotlet.dev/mcp/v1",
-      "headers": { "Authorization": "Bearer ${COTLET_API_KEY}" }
+    "substack": {
+      "command": "/path/to/substack-api-mcp-server/.venv/bin/substack-mcp",
+      "args": ["mcp"]
     }
   }
 }
