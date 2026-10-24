@@ -3,9 +3,7 @@
     "substack": {
       "command": "uvx",
       "args": [
-        "--from",
         "substack-api-mcp",
-        "substack-mcp",
         "mcp"
       ]
     }

@@ -1,5 +1,7 @@
 # Substack API and MCP server, self-hosted
 
+<!-- mcp-name: dev.cotlet/substack -->
+
 A **Substack API** and a **Substack MCP server** you run on your own computer, in Python, on the session of your own Google Chrome. All 50 Substack tools we run in production at [Cotlet](https://cotlet.dev/integrations/substack-api-mcp-server): posts and drafts from Markdown, publishing and scheduling, Notes, comments, subscribers, stats, recommendations and direct messages.
 
 Substack has no public API to write posts, publish Notes or manage subscribers, and no official MCP server. This repo gives you both:
@@ -19,7 +21,7 @@ It is for technical people who want to run it themselves, **for noncommercial us
 uv tool install substack-api-mcp                  # or: pip install substack-api-mcp
 substack-mcp connect                               # reads your Substack session from Chrome
 substack-mcp call list_posts
-claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp
+claude mcp add substack -- uvx substack-api-mcp mcp
 ```
 
 ## Contents
@@ -69,7 +71,7 @@ uv tool install substack-api-mcp       # or: pipx install substack-api-mcp, or: 
 substack-mcp --version
 ```
 
-MCP clients can also run it with no install: `uvx --from substack-api-mcp substack-mcp mcp`.
+MCP clients can also run it with no install: `uvx substack-api-mcp mcp`.
 
 From source:
 
@@ -153,9 +155,9 @@ The MCP server lists every tool with its input schema, a description written for
 ### Claude Code
 
 ```bash
-claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp
+claude mcp add substack -- uvx substack-api-mcp mcp
 # read only:
-claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp --read-only
+claude mcp add substack -- uvx substack-api-mcp mcp --read-only
 ```
 
 ### Claude Desktop
@@ -167,7 +169,7 @@ claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp --read-o
   "mcpServers": {
     "substack": {
       "command": "uvx",
-      "args": ["--from", "substack-api-mcp", "substack-mcp", "mcp"]
+      "args": ["substack-api-mcp", "mcp"]
     }
   }
 }
@@ -184,7 +186,7 @@ claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp --read-o
 ```toml
 [mcp_servers.substack]
 command = "uvx"
-args = ["--from", "substack-api-mcp", "substack-mcp", "mcp"]
+args = ["substack-api-mcp", "mcp"]
 ```
 
 ### Over HTTP

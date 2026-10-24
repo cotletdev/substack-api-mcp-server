@@ -24,6 +24,7 @@ Source = "https://github.com/cotletdev/substack-api-mcp-server"
 
 [project.scripts]
 substack-mcp = "substack_api_mcp.cli:main"
+substack-api-mcp = "substack_api_mcp.cli:main"
 
 [build-system]
 requires = ["hatchling>=1.27"]
