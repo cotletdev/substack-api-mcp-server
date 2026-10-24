@@ -1,8 +1,13 @@
 {
   "mcpServers": {
     "substack": {
-      "command": "/path/to/substack-api-mcp-server/.venv/bin/substack-mcp",
-      "args": ["mcp"]
+      "command": "uvx",
+      "args": [
+        "--from",
+        "substack-api-mcp",
+        "substack-mcp",
+        "mcp"
+      ]
     }
   }
 }

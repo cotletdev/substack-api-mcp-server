@@ -16,11 +16,10 @@ It is for technical people who want to run it themselves, **for noncommercial us
 [![MCP Badge](https://lobehub.com/badge/mcp/cotletdev-substack-api-mcp-server)](https://lobehub.com/mcp/cotletdev-substack-api-mcp-server)
 
 ```bash
-git clone https://github.com/cotletdev/substack-api-mcp-server.git && cd substack-api-mcp-server
-python3 -m venv .venv && . .venv/bin/activate && pip install -e .
+uv tool install substack-api-mcp                  # or: pip install substack-api-mcp
 substack-mcp connect                               # reads your Substack session from Chrome
 substack-mcp call list_posts
-claude mcp add substack -- "$PWD/.venv/bin/substack-mcp" mcp
+claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp
 ```
 
 ## Contents
@@ -63,6 +62,17 @@ Substack's session cookie (`substack.sid`) lasts about three months. When Substa
 
 ## Install
 
+From [PyPI](https://pypi.org/project/substack-api-mcp/):
+
+```bash
+uv tool install substack-api-mcp       # or: pipx install substack-api-mcp, or: pip install substack-api-mcp
+substack-mcp --version
+```
+
+MCP clients can also run it with no install: `uvx --from substack-api-mcp substack-mcp mcp`.
+
+From source:
+
 ```bash
 git clone https://github.com/cotletdev/substack-api-mcp-server.git
 cd substack-api-mcp-server
@@ -76,7 +86,7 @@ With [uv](https://docs.astral.sh/uv/): `uv venv && uv pip install -e .`, then `u
 
 Setting it up with an AI agent (Claude Code, Codex, Cursor)? Open it in this folder and ask it to set up the repo: [`AGENTS.md`](AGENTS.md) tells it every step, and it asks you only for the steps in Chrome.
 
-To update: `git pull && pip install -e .`. We copy every change of the hosted Substack tools into this repo.
+To update: `uv tool upgrade substack-api-mcp` (or `pip install -U substack-api-mcp`), from source `git pull && pip install -e .`. We copy every change of the hosted Substack tools into this repo.
 
 ## Connect your Chrome
 
@@ -143,9 +153,9 @@ The MCP server lists every tool with its input schema, a description written for
 ### Claude Code
 
 ```bash
-claude mcp add substack -- /path/to/substack-api-mcp-server/.venv/bin/substack-mcp mcp
+claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp
 # read only:
-claude mcp add substack -- /path/to/substack-api-mcp-server/.venv/bin/substack-mcp mcp --read-only
+claude mcp add substack -- uvx --from substack-api-mcp substack-mcp mcp --read-only
 ```
 
 ### Claude Desktop
@@ -156,8 +166,8 @@ claude mcp add substack -- /path/to/substack-api-mcp-server/.venv/bin/substack-m
 {
   "mcpServers": {
     "substack": {
-      "command": "/path/to/substack-api-mcp-server/.venv/bin/substack-mcp",
-      "args": ["mcp"]
+      "command": "uvx",
+      "args": ["--from", "substack-api-mcp", "substack-mcp", "mcp"]
     }
   }
 }
@@ -173,8 +183,8 @@ claude mcp add substack -- /path/to/substack-api-mcp-server/.venv/bin/substack-m
 
 ```toml
 [mcp_servers.substack]
-command = "/path/to/substack-api-mcp-server/.venv/bin/substack-mcp"
-args = ["mcp"]
+command = "uvx"
+args = ["--from", "substack-api-mcp", "substack-mcp", "mcp"]
 ```
 
 ### Over HTTP
