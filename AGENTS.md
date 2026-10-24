@@ -66,7 +66,7 @@ Errors come as `<code>: <message>`. `auth_expired` means Substack signed the ses
 | `substack_api_mcp/app.py` | app name, domains, session cookie, account paths, REST prefix | Rarely |
 | `substack_api_mcp/core/` | `@tool` declaration, errors, the HTTP client with the session (`context.py`), the account guard | Yes |
 | `substack_api_mcp/session.py` | reading cookies from Chrome over CDP, the session file | Yes |
-| `substack_api_mcp/runner.py`, `api.py`, `mcp_server.py`, `cli.py` | tool registry, REST API, MCP server, command line | Yes |
+| `substack_api_mcp/runner.py`, `api.py`, `mcp_server.py`, `mcp_context.py`, `cli.py` | tool registry, REST API, MCP server, its prompts and resources, command line | Yes |
 | `examples/` | scripts for common jobs | Yes |
 
 A new tool is a new file in `substack_api_mcp/substack/tools/` with a `@tool(...)` declaration (name, access, input schema, `route`). The registry finds it, and the REST API, the MCP server and the CLI show it without other changes.
