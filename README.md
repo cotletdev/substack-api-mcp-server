@@ -8,13 +8,13 @@ Substack has no public API to write posts, publish Notes or manage subscribers, 
 
 - **MCP server** for Claude Code, Claude Desktop, Cursor, Codex and any MCP client, over stdio or HTTP. [Setup](#mcp-server)
 - **REST API** on `http://127.0.0.1:8787/api/v1/substack`, with OpenAPI docs at `/docs`. [Setup](#rest-api)
-- **Python**: `call("list_posts", status="draft")`, plus 14 ready scripts in [`examples/`](examples/).
+- **Python**: `call("list_posts", status="draft")`, plus 14 ready scripts in [`examples/`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/).
 
 It is for technical people who want to run it themselves, **for noncommercial use only** ([license](#license)). If you want it running 24/7 on a server, kept working when Substack changes its site, for a team or a business, use the [hosted version at cotlet.dev](https://cotlet.dev/integrations/substack-api-mcp-server).
 
 [![Substack MCP server](https://img.shields.io/badge/Substack%20MCP-50%20tools-ff6719)](#all-50-tools)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-141318)](#requirements)
-[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial-141318)](LICENSE)
+[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial-141318)](https://github.com/cotletdev/substack-api-mcp-server/blob/main/LICENSE)
 [![MCP Badge](https://lobehub.com/badge/mcp/cotletdev-substack-api-mcp-server)](https://lobehub.com/mcp/cotletdev-substack-api-mcp-server)
 
 ```bash
@@ -86,7 +86,7 @@ substack-mcp --version
 
 With [uv](https://docs.astral.sh/uv/): `uv venv && uv pip install -e .`, then `uv run substack-mcp ...`.
 
-Setting it up with an AI agent (Claude Code, Codex, Cursor)? Open it in this folder and ask it to set up the repo: [`AGENTS.md`](AGENTS.md) tells it every step, and it asks you only for the steps in Chrome.
+Setting it up with an AI agent (Claude Code, Codex, Cursor)? Open it in this folder and ask it to set up the repo: [`AGENTS.md`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/AGENTS.md) tells it every step, and it asks you only for the steps in Chrome.
 
 To update: `uv tool upgrade substack-api-mcp` (or `pip install -U substack-api-mcp`), from source `git pull && pip install -e .`. We copy every change of the hosted Substack tools into this repo.
 
@@ -177,7 +177,7 @@ claude mcp add substack -- uvx substack-api-mcp mcp --read-only
 
 ### Cursor
 
-`~/.cursor/mcp.json`, the same block as Claude Desktop. A ready copy is in [`mcp.json`](mcp.json).
+`~/.cursor/mcp.json`, the same block as Claude Desktop. A ready copy is in [`mcp.json`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/mcp.json).
 
 ### Codex
 
@@ -256,24 +256,24 @@ call("schedule_post", post_id=draft["post_id"], publish_at="2026-11-03T08:00:00-
 
 Or one tool from the shell: `substack-mcp call get_post_stats post_id=148213977`, or with a JSON object.
 
-Ready scripts in [`examples/`](examples/). Each prints JSON, takes `--out file.csv` or `--out file.json` where it makes sense, and `--help`:
+Ready scripts in [`examples/`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/). Each prints JSON, takes `--out file.csv` or `--out file.json` where it makes sense, and `--help`:
 
 | Script | What it does |
 |---|---|
-| [`draft_from_markdown.py`](examples/draft_from_markdown.py) | A `.md` file to a draft: the first heading is the title, headings, links and lists are kept. `--publish-at` schedules it. |
-| [`schedule_post.py`](examples/schedule_post.py) | Schedules a draft for a set time, or `--cancel` takes it back to drafts. |
-| [`publish_note.py`](examples/publish_note.py) | A Note now or at a set time, `--link-latest` adds a link card to your newest post. |
-| [`list_posts.py`](examples/list_posts.py) | Published, draft or scheduled posts: title, audience, dates, URL. |
-| [`get_post.py`](examples/get_post.py) | One post saved as a Markdown file. |
-| [`weekly_report.py`](examples/weekly_report.py) | New and paid subscribers, cancellations, revenue, and each new post's opens and new subscribers. |
-| [`post_stats.py`](examples/post_stats.py) | Opens, open rate, views, likes, restacks and new subscribers for your last N posts. |
-| [`daily_stats.py`](examples/daily_stats.py) | Subscribers, paid subscribers, followers and views day by day. |
-| [`traffic_sources.py`](examples/traffic_sources.py) | Where your visitors came from, most views first. |
-| [`unanswered_comments.py`](examples/unanswered_comments.py) | Comments on your last N posts that you have not replied to. |
-| [`reply_to_comment.py`](examples/reply_to_comment.py) | A reply under one comment. |
-| [`list_subscribers.py`](examples/list_subscribers.py) | Subscribers by plan or join date, with activity rating. |
-| [`export_subscribers.py`](examples/export_subscribers.py) | The full list as the CSV that Export gives in the dashboard. |
-| [`add_subscribers.py`](examples/add_subscribers.py) | Adds emails from a text or CSV file as free subscribers, after asking you. |
+| [`draft_from_markdown.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/draft_from_markdown.py) | A `.md` file to a draft: the first heading is the title, headings, links and lists are kept. `--publish-at` schedules it. |
+| [`schedule_post.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/schedule_post.py) | Schedules a draft for a set time, or `--cancel` takes it back to drafts. |
+| [`publish_note.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/publish_note.py) | A Note now or at a set time, `--link-latest` adds a link card to your newest post. |
+| [`list_posts.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/list_posts.py) | Published, draft or scheduled posts: title, audience, dates, URL. |
+| [`get_post.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/get_post.py) | One post saved as a Markdown file. |
+| [`weekly_report.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/weekly_report.py) | New and paid subscribers, cancellations, revenue, and each new post's opens and new subscribers. |
+| [`post_stats.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/post_stats.py) | Opens, open rate, views, likes, restacks and new subscribers for your last N posts. |
+| [`daily_stats.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/daily_stats.py) | Subscribers, paid subscribers, followers and views day by day. |
+| [`traffic_sources.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/traffic_sources.py) | Where your visitors came from, most views first. |
+| [`unanswered_comments.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/unanswered_comments.py) | Comments on your last N posts that you have not replied to. |
+| [`reply_to_comment.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/reply_to_comment.py) | A reply under one comment. |
+| [`list_subscribers.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/list_subscribers.py) | Subscribers by plan or join date, with activity rating. |
+| [`export_subscribers.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/export_subscribers.py) | The full list as the CSV that Export gives in the dashboard. |
+| [`add_subscribers.py`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/add_subscribers.py) | Adds emails from a text or CSV file as free subscribers, after asking you. |
 
 ```bash
 python examples/draft_from_markdown.py essay.md --publish-at 2026-11-03T08:00:00-05:00
@@ -486,7 +486,7 @@ The source is public, the license is not an open source license: noncommercial u
 
 ## License
 
-[PolyForm Noncommercial License 1.0.0](LICENSE). In short:
+[PolyForm Noncommercial License 1.0.0](https://github.com/cotletdev/substack-api-mcp-server/blob/main/LICENSE). In short:
 
 - **Allowed:** noncommercial use: you, for your own personal purposes with your own Substack account, or a charity, school, public research or government body. Changing the code, and sharing it under the same license.
 - **Not allowed:** any commercial use, your own business included; client work; selling or offering it, or a service built on it.
@@ -499,7 +499,7 @@ Earlier versions of this repo (the scripts for the hosted API, up to commit 4399
   <a href="https://cotlet.dev">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="assets/logo-white.svg">
-      <img src="assets/logo.svg" alt="Cotlet" width="120">
+      <img src="https://raw.githubusercontent.com/cotletdev/substack-api-mcp-server/main/assets/logo.svg" alt="Cotlet" width="120">
     </picture>
   </a>
 </p>
