@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 from typing import TYPE_CHECKING, Any
-from zoneinfo import ZoneInfo
 
 from substack_api_mcp.core.helpers import limit
 from substack_api_mcp.core.tools import tool
@@ -61,7 +60,8 @@ async def list_traffic_sources(ctx: ToolContext, args: dict[str, Any]) -> Any:
     wanted = limit(args, 20, 50)  # Substack answers 400 above 50 (22.10.2026)
     offset = offset_cursor(args.get("cursor"))
     pub = await publication(ctx)
-    today = datetime.now(ZoneInfo("Europe/Warsaw")).date()
+    # The user's calendar day, so a US evening does not end the range on tomorrow (docs/05, 24.10.2026).
+    today = datetime.now(ctx.user_zone).date()
     params = {
         "from_date": (today - timedelta(days=int(period[:-1]))).isoformat(),
         "to_date": today.isoformat(),

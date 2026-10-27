@@ -9,6 +9,7 @@ from __future__ import annotations
 import json as jsonlib
 import time
 from dataclasses import dataclass, field
+from datetime import UTC, datetime, tzinfo
 from typing import Any
 from urllib.parse import urljoin, urlsplit
 
@@ -88,6 +89,11 @@ class ToolContext:
     timeout_s: float = 30.0
     _cache: dict[str, tuple[float, str]] = field(default_factory=dict, repr=False)
     _http: AsyncSession | None = field(default=None, repr=False)
+
+    @property
+    def user_zone(self) -> tzinfo:
+        """This computer's time zone, for "today" and date ranges."""
+        return datetime.now().astimezone().tzinfo or UTC
 
     def _client(self) -> AsyncSession:
         if self._http is None:

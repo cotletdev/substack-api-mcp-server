@@ -49,7 +49,7 @@ async def publication(ctx: ToolContext) -> dict[str, Any]:
     if await _suspended(ctx):
         raise TargetBlockedError(
             "Substack suspended this account and hid its publication. The notice and the appeal link are on "
-            "substack.com in your Cloud Browser."
+            "substack.com in Chrome."
         )
     raise ToolError("This Substack account has no publication it can publish to.", ErrorCode.APP_PERMISSION_DENIED)
 

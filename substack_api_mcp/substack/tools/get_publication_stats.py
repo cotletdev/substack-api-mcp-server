@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 from typing import TYPE_CHECKING, Any
-from zoneinfo import ZoneInfo
 
 from substack_api_mcp.core.tools import tool
 from substack_api_mcp.substack.client import call, publication
@@ -55,7 +54,8 @@ async def get_publication_stats(ctx: ToolContext, args: dict[str, Any]) -> Any:
     pub = await publication(ctx)
     # The dashboard's summary for the last N days: subscribers and ARR at the start and the end.
     summary = await call(ctx, "GET", f"{pub['base']}/api/v1/publish-dashboard/summary-v2", params={"range": days})
-    today = datetime.now(ZoneInfo("Europe/Warsaw")).date()
+    # The user's calendar day, so a US evening does not end the range on tomorrow (docs/05, 24.10.2026).
+    today = datetime.now(ctx.user_zone).date()
     window = {"from": (today - timedelta(days=days)).isoformat(), "to": today.isoformat(), "offset": 0, "limit": 1}
     # Cancelled paid subscriptions in the period (Analytics > Unsubscribes); Substack keeps no count of free ones.
     cancels = await call(ctx, "GET", f"{pub['base']}/api/v1/publication/stats/unsubscribes", params=window)
