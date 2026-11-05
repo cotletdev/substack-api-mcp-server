@@ -1,8 +1,36 @@
-# Substack API and MCP server, self-hosted
+# Substack API and MCP server: connect Substack to ChatGPT and Claude
 
 <!-- mcp-name: dev.cotlet/substack -->
 
-A **Substack API** and a **Substack MCP server** you run on your own computer, in Python, on the session of your own Google Chrome. All 50 Substack tools we run in production at [Cotlet](https://cotlet.dev/integrations/substack-api-mcp-server): posts and drafts from Markdown, publishing and scheduling, Notes, comments, subscribers, stats, recommendations and direct messages.
+**Yes, ChatGPT, Claude and other AI agents can work in your Substack account.** That includes Cursor, Codex, OpenClaw and any MCP client, plus automations in n8n, Make and Zapier. Ask in plain words, and the AI drafts posts from your notes, schedules them, posts Notes, answers comments and reports your subscriber and post stats. It shows you what it will do first and sends nothing to other people until you say so.
+
+This repo is the missing piece: 50 Substack tools for AI assistants and scripts.
+
+## What you can ask
+
+> *Turn essay.md into a draft for everyone and schedule it for Tuesday 8:00 New York time. Once it is out, post a Note with a link card to it.*
+>
+> *Find comments on my last three posts that I have not answered and draft a short reply to each.*
+>
+> *Last week's numbers: new and paid subscribers, cancellations, revenue, and opens for each post.*
+>
+> *Where did my readers come from in the last 30 days?*
+
+## Two ways to get it
+
+| | [Ready to use, at Cotlet](https://cotlet.dev/integrations/substack-api-mcp-server?utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=two-ways) | Run it yourself, this repo |
+|---|---|---|
+| For | writers and publishers | developers |
+| Setup | sign in to Substack once, about 5 minutes, nothing to install | Python and a terminal |
+| Works in | ChatGPT and Claude apps, on your phone too, Cursor, Codex, OpenClaw, any MCP client, n8n, Make, Zapier, REST API | Claude Code, Claude Desktop, Cursor, Codex on your computer |
+| Runs | 24/7, your computer can be off | while your computer is on |
+| Price | 7 days free, no card | free |
+
+**[Start free at cotlet.dev →](https://cotlet.dev/signup?app=substack&utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=top-button)**
+
+## Run it yourself
+
+A **Substack API** and a **Substack MCP server** you run on your own computer, in Python, on the session of your own Google Chrome. All 50 Substack tools we run in production at [Cotlet](https://cotlet.dev/integrations/substack-api-mcp-server?utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=intro): posts and drafts from Markdown, publishing and scheduling, Notes, comments, subscribers, stats, recommendations and direct messages.
 
 Substack has no public API to write posts, publish Notes or manage subscribers, and no official MCP server. This repo gives you both:
 
@@ -10,11 +38,11 @@ Substack has no public API to write posts, publish Notes or manage subscribers, 
 - **REST API** on `http://127.0.0.1:8787/api/v1/substack`, with OpenAPI docs at `/docs`. [Setup](#rest-api)
 - **Python**: `call("list_posts", status="draft")`, plus 14 ready scripts in [`examples/`](https://github.com/cotletdev/substack-api-mcp-server/blob/main/examples/).
 
-It is for technical people who want to run it themselves, **for noncommercial use only** ([license](#license)). If you want it running 24/7 on a server, kept working when Substack changes its site, for a team or a business, use the [hosted version at cotlet.dev](https://cotlet.dev/integrations/substack-api-mcp-server).
+Free for your own use, your own business included ([license](#license)).
 
 [![Substack MCP server](https://img.shields.io/badge/Substack%20MCP-50%20tools-ff6719)](#all-50-tools)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-141318)](#requirements)
-[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial-141318)](https://github.com/cotletdev/substack-api-mcp-server/blob/main/LICENSE)
+[![License: Elastic 2.0](https://img.shields.io/badge/license-Elastic%202.0-141318)](https://github.com/cotletdev/substack-api-mcp-server/blob/main/LICENSE)
 [![MCP Badge](https://lobehub.com/badge/mcp/cotletdev-substack-api-mcp-server)](https://lobehub.com/mcp/cotletdev-substack-api-mcp-server)
 
 ```bash
@@ -26,6 +54,7 @@ claude mcp add substack -- uvx substack-api-mcp mcp
 
 ## Contents
 
+- [Questions from Substack users](#questions-from-substack-users)
 - [How it works](#how-it-works)
 - [Requirements](#requirements)
 - [Install](#install)
@@ -40,6 +69,44 @@ claude mcp add substack -- uvx substack-api-mcp mcp
 - [Self-hosted or hosted](#self-hosted-or-hosted)
 - [FAQ](#faq)
 - [License](#license)
+
+## Questions from Substack users
+
+**Does Substack have an API?**
+Only a limited one (checked 11 Oct 2026). Its Developer API looks up public creator profiles after approval, and there is no public API to write posts or Notes, manage subscribers or send email. RSS reads public posts only. This repo and [Cotlet](https://cotlet.dev/integrations/substack-api-mcp-server?utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=faq-api) give you 50 Substack tools as a REST API and an MCP server.
+
+**Can I get a Substack API key?**
+Not from Substack for your own account. With Cotlet you get your own API key that works with your Substack account, for scripts, n8n, Make, Zapier or any HTTP client. This repo needs no key: it runs on your computer, on your own Substack session.
+
+**Is there an official ChatGPT integration for Substack?**
+Partly. Substack has an official Claude connector that reads your publication's data, such as subscribers, revenue and post stats. It cannot write. Cotlet adds the writing side: drafts, publishing and scheduling, Notes, comments and messages, in ChatGPT, Claude and other AI agents.
+
+**How do I connect Substack to ChatGPT?**
+Sign up at [cotlet.dev](https://cotlet.dev/signup?app=substack&utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=faq-chatgpt), sign in to Substack once in your Cloud Browser there, and add Cotlet to ChatGPT, following the steps in your account. Then ask ChatGPT about your Substack like you would ask an assistant. ChatGPT needs a server on the internet, so this repo alone, running on your computer, does not connect to ChatGPT.
+
+**Can ChatGPT write and schedule my Substack posts?**
+Yes, with Cotlet. It turns your notes or a Markdown file into a Substack draft, shows it to you and publishes or schedules it after your OK. It can post a Note about it once it is out.
+
+**Can ChatGPT read my Substack stats?**
+Yes, with Cotlet: new and paid subscribers, cancellations, revenue, opens per post and where your readers came from, in plain words.
+
+**Can I automate Substack with Zapier, Make or n8n?**
+Substack has no official way to write posts from Zapier, Make or n8n. With Cotlet they can create drafts, publish posts and post Notes, for example from a Google Doc or an RSS feed.
+
+**Can I use it from my phone?**
+Yes, with Cotlet: once it is set up, the ChatGPT and Claude apps on your phone can use Substack for you.
+
+**Do I need to be technical?**
+For Cotlet, no: you sign in to Substack and add Cotlet to ChatGPT or Claude, with step-by-step instructions in your account. This repo is for people who are fine with Python and a terminal.
+
+**Is my Substack account safe?**
+Yes. Neither Cotlet nor this repo sees or stores your Substack password. You sign in yourself, the way you always do, and the AI works on that signed-in session. Anything that reaches other people asks for your OK first: in Cotlet by default, here through your MCP client.
+
+**Is it free?**
+This repo is free, also in your own business. Cotlet is free for 7 days with no card, then one-time credit packs from $29, no subscription. [Pricing](https://cotlet.dev/pricing?utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=faq-price).
+
+**I manage Substack for several accounts or clients. Does that work?**
+Yes, with Cotlet. Each Substack login gets its own connection. Write to [contact@cotlet.dev](mailto:contact@cotlet.dev) and tell us how many accounts you manage.
 
 ## How it works
 
@@ -421,7 +488,7 @@ The REST API answers `{"error": "<code>", "message": "..."}`. The MCP server ret
 
 ## Self-hosted or hosted
 
-| | This repo | [Cotlet, hosted](https://cotlet.dev/integrations/substack-api-mcp-server) |
+| | This repo | [Cotlet, hosted](https://cotlet.dev/integrations/substack-api-mcp-server?utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=compare) |
 |---|---|---|
 | Tools | the same 50 | the same 50 |
 | Runs | on your computer, while it is on | in the cloud, 24/7 |
@@ -429,15 +496,12 @@ The REST API answers `{"error": "<code>", "message": "..."}`. The MCP server ret
 | When Substack changes its site | `git pull` once we have fixed it | fixed for you, every tool tested daily |
 | Approvals | your MCP client asks per call | posts, Notes, replies and DMs wait for your OK, switchable per tool |
 | Works with | MCP clients on your machine, local scripts | Claude.ai and ChatGPT connectors, n8n, Make, Zapier, any HTTP client |
-| Who may use it | you, for noncommercial use | teams, businesses, agencies |
+| Who may use it | you and your own business | you, teams, businesses, agencies |
 | Price | free | free 7-day trial with 2,000 credits, no card; then one-time packs from $29 for 5,000 credits |
 
 On the hosted version a successful call uses 10 credits for most tools, failed calls are free, and the Cloud Browser uses 50 credits a day while it has an app enabled for agents. [Full pricing](https://cotlet.dev/pricing).
 
 ## FAQ
-
-**Does Substack have an official API?**
-Only a limited one (checked 11 Oct 2026). Its Developer API looks up public creator profiles after approval, and there is no public API to write posts or Notes, manage subscribers or send email. RSS reads public posts only. Details and sources: [cotlet.dev/integrations/substack-api-mcp-server](https://cotlet.dev/integrations/substack-api-mcp-server).
 
 **Is there a Substack MCP server for Claude, ChatGPT or Cursor?**
 Yes, this one runs on your machine: `substack-mcp mcp` for Claude Code, Claude Desktop, Cursor and Codex. ChatGPT and Claude.ai connectors need a public HTTPS URL, which the [hosted Substack MCP server](https://cotlet.dev/integrations/substack-api-mcp-server) gives you.
@@ -476,20 +540,20 @@ Technically yes, with `SUBSTACK_AUTH_TOKEN`. Substack then sees your session fro
 Requests carry Chrome's fingerprint and go out one at a time, as you would click. Nobody can promise a platform never acts. Keep to your normal use and do not add or message people in bulk.
 
 **Can I use it at work or for my clients?**
-No, the license allows noncommercial use only. For a team, a company or client work, use [Cotlet](https://cotlet.dev) or write to [contact@cotlet.dev](mailto:contact@cotlet.dev).
+At work and in your own business, yes, free. You may not offer it to others as a hosted or managed service. For client work, use [Cotlet](https://cotlet.dev?utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=faq-clients) or write to [contact@cotlet.dev](mailto:contact@cotlet.dev).
 
 **Is it open source?**
-The source is public, the license is not an open source license: noncommercial use only, no business use.
+The source is public under the Elastic License 2.0: free to use and change, also in your own business, but not to resell as a hosted service.
 
 **A tool broke or I need another one.**
 [Open an issue](https://github.com/cotletdev/substack-api-mcp-server/issues) with the tool name and the error message.
 
 ## License
 
-[PolyForm Noncommercial License 1.0.0](https://github.com/cotletdev/substack-api-mcp-server/blob/main/LICENSE). In short:
+[Elastic License 2.0](https://github.com/cotletdev/substack-api-mcp-server/blob/main/LICENSE). In short:
 
-- **Allowed:** noncommercial use: you, for your own personal purposes with your own Substack account, or a charity, school, public research or government body. Changing the code, and sharing it under the same license.
-- **Not allowed:** any commercial use, your own business included; client work; selling or offering it, or a service built on it.
+- **Allowed:** using it for yourself and in your own business, free. Changing the code and sharing it under the same license.
+- **Not allowed:** offering it to others as a hosted or managed service, removing the license notices, getting around its limits.
 
 Earlier versions of this repo (the scripts for the hosted API, up to commit 4399e88) stay MIT.
 
@@ -504,4 +568,4 @@ Earlier versions of this repo (the scripts for the hosted API, up to commit 4399
   </a>
 </p>
 
-Maintained by [Cotlet](https://cotlet.dev) ([@cotletdev](https://x.com/cotletdev)). Substack is a trademark of its owner. This project is unofficial and not affiliated with, endorsed or sponsored by Substack.
+Maintained by [Cotlet](https://cotlet.dev?utm_source=github&utm_medium=readme&utm_campaign=substack&utm_content=footer) ([@cotletdev](https://x.com/cotletdev)). Substack is a trademark of its owner. This project is unofficial and not affiliated with, endorsed or sponsored by Substack.
