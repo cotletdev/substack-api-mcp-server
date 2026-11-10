@@ -47,7 +47,7 @@ Free for your own use, your own business included ([license](#license)).
 [![License: Elastic 2.0](https://img.shields.io/badge/license-Elastic%202.0-141318)](https://github.com/cotletdev/substack-api-mcp-server/blob/main/LICENSE)
 [![MCP Badge](https://lobehub.com/badge/mcp/cotletdev-substack-api-mcp-server)](https://lobehub.com/mcp/cotletdev-substack-api-mcp-server)
 
-Also on Odel: https://odel.app/modules/cotlet/substack
+Also on Odel: https://odel.app/modules/cotlet/substack and mcpbeat: https://mcpbeat.com/mcp-servers/cotlet/substack/
 
 ```bash
 uv tool install substack-api-mcp                  # or: pip install substack-api-mcp
