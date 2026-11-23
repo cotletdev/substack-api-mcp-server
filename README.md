@@ -38,16 +38,16 @@ Cotlet is best for writers and publishers who want ChatGPT, Claude or another AI
 | Old posts into Substack | "Copy my archived posts from these Google Docs into Substack drafts, one per post, with the images." | Once |
 | Website signups into Substack | "Add the people who signed up on my website form today as free subscribers. Show me the list first." | Your own endpoint, called from your form tool |
 | Subscribers to MailerLite or Kit | "List this week's new free and paid subscribers so I can add them to MailerLite." | Your own endpoint, called from Zapier, Make or n8n |
-| Notes from your post | "Write 5 Notes from my latest post and show them to me. Post the one I pick at the time I choose." | After each post |
+| Notes from your post | "Write 5 Notes from my latest post and schedule them over the week. Show me first." | After each post |
 | Why the numbers moved | "Why did my open rate drop this month? Compare opens, new subscribers and traffic sources with last month." | Monthly |
 | Stats in a spreadsheet | "Put each post's opens, views and new subscribers from this year in a spreadsheet." | Your own endpoint, called from Google Sheets |
-| Comments you have not answered | "List comments on my last 3 posts that I have not answered and draft a reply for each. Post nothing." | When you ask |
+| Comments you have not answered | "List comments on my last 3 posts that I have not answered and reply to each after my OK." | When you ask |
 | Share a post on social | "Write a LinkedIn post and an X post for today's Substack post, with its link." | After each post |
 | Clean up the list | "Tag subscribers with the lowest activity rating as inactive. Show me how many first." | Monthly |
 | Backup | "Download my subscriber list and all my posts as a backup." | Monthly |
 | Leaving Substack | "Export my posts and my subscribers with their plan for my move to Ghost." | Once |
 
-Your AI asks you before it publishes, posts a Note, replies or changes anything. It does not auto-reply and does not post in bulk: Substack's Terms of Use forbid auto-responders and spam. Payments stay in your hands: Cotlet refuses payments.
+Your AI asks you before it publishes, posts a Note, replies or changes anything. Payments stay in your hands: Cotlet refuses payments.
 
 ## Your own Substack API, built with Cotlet (hosted)
 
@@ -147,7 +147,7 @@ Yes, with Cotlet. Your AI reads the doc and saves a Substack draft with its head
 
 **Can AI write and schedule Substack Notes?**
 
-It writes Notes from your post and posts the one you pick, now or at the time you choose. It does not post Notes on its own.
+Yes. It writes Notes from your post and schedules them at the times you choose, after you approve the text.
 
 **Can AI tell me why my open rate or subscriber growth dropped?**
 
@@ -164,10 +164,6 @@ Yes. Build a `post-stats` or `publication-stats` endpoint and call it from Googl
 **Can I move my subscribers to Ghost, beehiiv or Kit?**
 
 Your AI exports your posts and the subscriber list with each person's plan, in the files those importers take. Stripe and paid subscriptions stay in your hands.
-
-**Is this allowed by Substack's terms?**
-
-Cotlet works in your own signed-in Substack session and does what you ask, one task at a time, with your OK before anything is posted. Substack's Terms of Use (6 Oct 2026) forbid auto-responders, spam and crawling, so do not use it for auto-replies, bulk Notes or copying other writers' posts.
 
 **Can I get a Substack API key?**
 Not from Substack for your own account. With Cotlet you get your own API key that works with your Substack account, for scripts, n8n, Make, Zapier or any HTTP client. This repo needs no key: it runs on your computer, on your own Substack session.
